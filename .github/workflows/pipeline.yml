@@ -9,8 +9,12 @@
 
 name: Java CI
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
+      - develop
+      
 jobs:
   build:
     runs-on: self-hosted
