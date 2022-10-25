@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PalavraService {
 
-    boolean deletaPalavra(String palavra);
+    int deletaPalavra(String palavra);
 
     public Palavra novaPalavra(Palavra palavra);
 

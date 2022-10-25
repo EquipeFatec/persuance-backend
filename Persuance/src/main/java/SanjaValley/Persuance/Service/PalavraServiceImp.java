@@ -33,7 +33,9 @@ public class PalavraServiceImp implements PalavraService{
     }
 
     @Override
-    public boolean deletaPalavra(String palavra) {
+    public int deletaPalavra(String palavra) {
+
+
         return palavraRepository.deleteByPalavra(palavra);
     }
 

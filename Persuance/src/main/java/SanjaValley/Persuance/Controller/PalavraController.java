@@ -19,13 +19,14 @@ public class PalavraController {
     @Autowired
     private PalavraServiceImp palavraService;
 
-    @DeleteMapping(value = "deleta/{palavra}")
-    public ResponseEntity<String> deletaPalavra(@PathVariable String palavra){
+    @DeleteMapping(value = "deleta")
+    public ResponseEntity<String> deletaPalavra(@RequestParam(value = "palavra") String palavra){
         var isRemoved = palavraService.deletaPalavra(palavra);
-        if (!isRemoved){
+        if (isRemoved > 0){
             return new ResponseEntity<>("Não foi possivel deletar a palavra: ",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Palavra deletada com Sucessso",HttpStatus.OK);
+       // return new ResponseEntity<>("Delete called",HttpStatus.OK);
     }
 
     @GetMapping(value = "/{palavra}")
