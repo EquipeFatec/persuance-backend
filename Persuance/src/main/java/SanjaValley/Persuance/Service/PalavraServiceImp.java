@@ -14,14 +14,38 @@ public class PalavraServiceImp implements PalavraService{
     @Autowired
     private PalavraRepository palavraRepository;
 
+    String mensagem;
+
+    private boolean checkPreenchimentoPalavra(String palavra){
+        if(palavra.isEmpty() || palavra == null){
+            mensagem = "Palavra não preenchida";
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPreenchimentoClasseGramatical(String classe){
+        if(classe.isEmpty() || classe == null){
+            mensagem = "Classe Gramatical não preenchida";
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deletaPalavra(String palavra) {
+        return palavraRepository.deleteByPalavra(palavra);
+    }
 
     @Override
     public Palavra novaPalavra(Palavra palavra) {
-
-        if(palavra.getPalavra().isEmpty() || palavra.getPalavra() == null
-        || palavra.getClasseGramatical().isEmpty() || palavra.getClasseGramatical() == null){
-            throw new IllegalArgumentException("Palavra ou Classe Gramatical não foi preenchida");
+        if (!checkPreenchimentoPalavra(palavra.getPalavra())
+                || !checkPreenchimentoClasseGramatical(palavra.getClasseGramatical())){
+            throw new IllegalArgumentException(mensagem);
         }
+       // if(palavra.getClasseGramatical().isEmpty() || palavra.getClasseGramatical() == null){
+        //    throw new IllegalArgumentException("Classe Gramatical não foi preenchida");
+       // }
       List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
               ,palavra.getClasseGramatical());
       if(!palavraList.isEmpty()){
@@ -36,22 +60,21 @@ public class PalavraServiceImp implements PalavraService{
     public List<Palavra> buscaPorPalavra(String palavra){
         //todo if usuario admin uma busca
 
-        if(palavra.isEmpty() || palavra == null){
-            throw new IllegalArgumentException("Não foi inserida nenhuma palavra");
+        if(!checkPreenchimentoPalavra(palavra)){
+            throw new IllegalArgumentException(mensagem);
         }
-        List<Palavra> teste = palavraRepository.findUltimaRevisaoPalavra(palavra);
-        if(teste.isEmpty()){
+        List<Palavra> palavraList = palavraRepository.findUltimaRevisaoPalavra(palavra);
+        if(palavraList.isEmpty()){
             throw new IllegalStateException("Nenhuma Palavra Encontrada");
         }
-        return teste;
+        return palavraList;
     }
 
     @Override
     public List<Palavra> buscaPalavraEClasseGramatical(String palavra, String classeGramatical){
 
-        if(palavra.isEmpty() || palavra == null
-                || classeGramatical.isEmpty() || classeGramatical == null){
-            throw new IllegalArgumentException("Palavra ou Classe Gramatical não foi preenchida");
+        if(!checkPreenchimentoPalavra(palavra) || !checkPreenchimentoClasseGramatical(classeGramatical)){
+            throw new IllegalArgumentException(mensagem);
         }
         List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra
                 ,classeGramatical);
