@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests().antMatchers("/login").permitAll().and()
                 .authorizeRequests().antMatchers("/api/csv/*").permitAll().and()
+                .authorizeRequests().antMatchers("/search/*").permitAll().and()
 				.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint()).and()
 				// this disables session creation on Spring Security
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -47,6 +47,15 @@ public class PalavraServiceImp implements PalavraService{
     }
 
     @Override
+    public List<Palavra> buscarPalavras(){
+        List<Palavra> palavras = palavraRepository.findAll();
+        if(palavras.isEmpty()){
+            throw new IllegalStateException("Nenhuma Palavra Encontrada");
+        }
+        return palavras;
+    }
+
+    @Override
     public List<Palavra> buscaPalavraEClasseGramatical(String palavra, String classeGramatical){
 
         if(palavra.isEmpty() || palavra == null

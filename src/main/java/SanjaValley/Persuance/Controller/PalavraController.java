@@ -1,6 +1,6 @@
 package SanjaValley.Persuance.Controller;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +17,29 @@ import SanjaValley.Persuance.Service.PalavraServiceImp;
 public class PalavraController {
 
     @Autowired
-    private PalavraServiceImp palavraService;
+    private PalavraServiceImp palavraService;c
 
     @GetMapping(value = "/{palavra}")
-    public ResponseEntity<List<Palavra>> buscaPorPalavra(@PathVariable String palavra){
-            List<Palavra> list = palavraService.buscaPorPalavra(palavra);
-            return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<List<Palavra>> buscaPorPalavra(@PathVariable String palavra) {
+        List<Palavra> list = palavraService.buscaPorPalavra(palavra);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping(value = "/edita/{palavra}")
-    public ResponseEntity<List<Palavra>> buscaPorPalavraEClasse(@PathVariable String palavra, String classe){
+    public ResponseEntity<List<Palavra>> buscaPorPalavraEClasse(@PathVariable String palavra, String classe) {
         List<Palavra> list = palavraService.buscaPalavraEClasseGramatical(palavra, classe);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/save")
     public ResponseEntity<Palavra> adicionaPalavra(@RequestBody Palavra palavra) {
-            Palavra _palavra = palavraService.novaPalavra(palavra);
-            return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
+        Palavra _palavra = palavraService.novaPalavra(palavra);
+        return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/palavras")
+    public ResponseEntity<List<Palavra>> buscarTodasPalavras() {
+        List<Palavra> palavras = palavraService.buscarPalavras();
+        return new ResponseEntity<>(palavras, HttpStatus.OK);
     }
 }
