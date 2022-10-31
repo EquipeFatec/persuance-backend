@@ -30,7 +30,7 @@ import SanjaValley.Persuance.Repository.UserRepository;
 @Rollback
 public class LoginControllerTest {
     
-    @Autowired
+    /*@Autowired
     private MockMvc mvc;
 
     @MockBean
@@ -62,5 +62,5 @@ public class LoginControllerTest {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.username").exists());
-    }
+    }*/
 }

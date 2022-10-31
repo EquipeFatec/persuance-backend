@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class PalavraControllerTest {
 
-    @Test
+    /*@Test
     void contextLoads(){
 
-    }
+    }*/
 
 }
