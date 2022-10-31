@@ -13,7 +13,7 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long> {
     public List<Palavra> findByPalavra(String palavra);
 
     //Usado no caso de user, retorna a palavra que está na ULTIMA revisao
-    @Query(nativeQuery = true, value = "WITH pa_palavra AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY pa_classe_gramatical ORDER BY pa_revisao DESC) row_num FROM pa_palavra) SELECT * FROM pa_palavra  WHERE pa_palavra = ?1 AND row_num = 1")
+    @Query(nativeQuery = true, value = "WITH pa_palavra AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY pa_classe_gramatical ORDER BY pa_revisao DESC) row_num FROM pa_palavra) SELECT * FROM pa_palavra  WHERE pa_palavra = ?1 AND row_num = 1;")
     public List<Palavra> findUltimaRevisaoPalavra(String palavra);
 
 
