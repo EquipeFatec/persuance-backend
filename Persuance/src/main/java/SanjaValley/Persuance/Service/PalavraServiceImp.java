@@ -45,9 +45,6 @@ public class PalavraServiceImp implements PalavraService{
                 || !checkPreenchimentoClasseGramatical(palavra.getClasseGramatical())){
             throw new IllegalArgumentException(mensagem);
         }
-       // if(palavra.getClasseGramatical().isEmpty() || palavra.getClasseGramatical() == null){
-        //    throw new IllegalArgumentException("Classe Gramatical não foi preenchida");
-       // }
       List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
               ,palavra.getClasseGramatical());
       if(!palavraList.isEmpty()){
