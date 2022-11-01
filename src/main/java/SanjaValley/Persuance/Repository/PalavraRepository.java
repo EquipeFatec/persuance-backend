@@ -2,6 +2,7 @@ package SanjaValley.Persuance.Repository;
 
 import java.util.List;
 
+import SanjaValley.Persuance.Enums.ClasseGramatical;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import SanjaValley.Persuance.Entity.Palavra;

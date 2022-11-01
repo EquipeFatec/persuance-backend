@@ -19,7 +19,7 @@ public class PalavraServiceImp implements PalavraService{
     public Palavra novaPalavra(Palavra palavra) {
 
         if(palavra.getPalavra().isEmpty() || palavra.getPalavra() == null
-        || palavra.getClasseGramatical().isEmpty() || palavra.getClasseGramatical() == null){
+         || palavra.getClasseGramatical() == null){
             throw new IllegalArgumentException("Palavra ou Classe Gramatical não foi preenchida");
         }
       List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
@@ -54,7 +54,7 @@ public class PalavraServiceImp implements PalavraService{
             throw new IllegalArgumentException("Palavra ou Classe Gramatical não foi preenchida");
         }
         List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra
-                ,classeGramatical);
+                ,null);
         if(palavraList.isEmpty()){
             throw new IllegalStateException("Nenhuma Palavra Encontrada");
         }
