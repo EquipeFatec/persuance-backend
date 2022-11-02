@@ -3,6 +3,7 @@ package SanjaValley.Persuance.Controller;
 
 import java.util.List;
 
+import SanjaValley.Persuance.Entity.TextoResultado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,15 @@ public class PalavraController {
 
     @Autowired
     private PalavraServiceImp palavraService;
+
+    @DeleteMapping(value = "deleta")
+    public ResponseEntity<String> deletaPalavra(@RequestParam(value = "palavra") String palavra){
+        var isRemoved = palavraService.deletaPalavra(palavra);
+        if (isRemoved == 0){
+            return new ResponseEntity<>("Não foi possivel deletar a palavra: ",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Palavra deletada com Sucessso",HttpStatus.OK);
+    }
 
     @GetMapping(value = "/{palavra}")
     public ResponseEntity<List<Palavra>> buscaPorPalavra(@PathVariable String palavra){
@@ -35,5 +45,11 @@ public class PalavraController {
     public ResponseEntity<Palavra> adicionaPalavra(@RequestBody Palavra palavra) {
             Palavra _palavra = palavraService.novaPalavra(palavra);
             return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/texto/{texto}")
+    public ResponseEntity<List<TextoResultado>> buscaNoTexto(@PathVariable String texto){
+        List<TextoResultado> list = palavraService.buscarPorPalavraNoTexto(texto);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
