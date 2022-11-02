@@ -1,7 +1,9 @@
 package SanjaValley.Persuance.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import SanjaValley.Persuance.Entity.TextoResultado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,16 +85,27 @@ public class PalavraServiceImp implements PalavraService{
         return palavraList;
     }
 
-
-/*
-    public List<Palavra> buscarPorPalavraNoTexto(String palavra){
+    public List<TextoResultado> buscarPorPalavraNoTexto(String palavra){
         String[] arrOfStr = palavra.split(" ");
+        List<TextoResultado> list = new ArrayList<TextoResultado>();
 
-        for (String a : arrOfStr)
-            palavraRepository.findByPalavra(a);
-
-        return  null;
-    }*/
+        for (String a : arrOfStr){
+            TextoResultado textoResultado = new TextoResultado(a);
+            if(list.contains(textoResultado)){
+                continue;
+            }
+            List<Palavra> listaPalavra = palavraRepository.findByPalavra(a);
+            if (listaPalavra.isEmpty()){
+                textoResultado.setAprovada(false);
+            }else{
+                for (Palavra p : listaPalavra){
+                   textoResultado.setAprovada(p.isAprovada());
+                }
+            }
+            list.add(textoResultado);
+        }
+        return list;
+    }
 
 
 }

@@ -3,6 +3,7 @@ package SanjaValley.Persuance.Controller;
 
 import java.util.List;
 
+import SanjaValley.Persuance.Entity.TextoResultado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,11 @@ public class PalavraController {
     public ResponseEntity<Palavra> adicionaPalavra(@RequestBody Palavra palavra) {
             Palavra _palavra = palavraService.novaPalavra(palavra);
             return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/texto/{texto}")
+    public ResponseEntity<List<TextoResultado>> buscaNoTexto(@PathVariable String texto){
+        List<TextoResultado> list = palavraService.buscarPorPalavraNoTexto(texto);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

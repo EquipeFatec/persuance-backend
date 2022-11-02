@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Table(name="pa_palavra")
 public class Palavra {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pa_id")
