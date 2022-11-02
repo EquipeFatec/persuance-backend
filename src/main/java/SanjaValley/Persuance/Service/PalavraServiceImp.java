@@ -64,12 +64,22 @@ public class PalavraServiceImp implements PalavraService{
         if(!checkPreenchimentoPalavra(palavra)){
             throw new IllegalArgumentException(mensagem);
         }
-        List<Palavra> palavraList = palavraRepository.findUltimaRevisaoPalavra(palavra);
+        List<Palavra> palavraList = palavraRepository.findByPalavra(palavra);
         if(palavraList.isEmpty()){
             throw new IllegalStateException("Nenhuma Palavra Encontrada");
         }
         return palavraList;
     }
+
+    @Override
+    public List<Palavra> todasAsPalavras(){
+       List<Palavra> palavraList = palavraRepository.findAll();
+       return palavraList;
+    }
+
+
+
+
 
     @Override
     public List<Palavra> buscaPalavraEClasseGramatical(String palavra, String classeGramatical){

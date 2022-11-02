@@ -29,6 +29,4 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long> {
     @Transactional
     @Query(nativeQuery = true, value = "DELETE FROM pa_palavra a where a.pa_palavra = :palavra")
     public int deleteByPalavra(@Param("palavra")String palavra);
-
-
 }

@@ -12,5 +12,7 @@ public interface PalavraService {
 
     public List<Palavra> buscaPorPalavra(String palavra);
 
+    public List<Palavra> todasAsPalavras();
+
     public List<Palavra> buscaPalavraEClasseGramatical(String palavra, String classeGramatical);
 }

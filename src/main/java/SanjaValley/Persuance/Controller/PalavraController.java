@@ -29,6 +29,12 @@ public class PalavraController {
         return new ResponseEntity<>("Palavra deletada com Sucessso",HttpStatus.OK);
     }
 
+    @GetMapping(value = "/palavras")
+    public ResponseEntity<List<Palavra>> todasAsPalavras(){
+        List<Palavra> list = palavraService.todasAsPalavras();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{palavra}")
     public ResponseEntity<List<Palavra>> buscaPorPalavra(@PathVariable String palavra){
             List<Palavra> list = palavraService.buscaPorPalavra(palavra);
