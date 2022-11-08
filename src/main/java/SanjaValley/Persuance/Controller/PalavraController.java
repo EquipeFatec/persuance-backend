@@ -17,7 +17,7 @@ import SanjaValley.Persuance.Service.PalavraServiceImp;
 public class PalavraController {
 
     @Autowired
-    private PalavraServiceImp palavraService;c
+    private PalavraServiceImp palavraService;
 
     @GetMapping(value = "/{palavra}")
     public ResponseEntity<List<Palavra>> buscaPorPalavra(@PathVariable String palavra) {
