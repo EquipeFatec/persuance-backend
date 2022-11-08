@@ -1,9 +1,13 @@
 package SanjaValley.Persuance.Controller;
 
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import SanjaValley.Persuance.Entity.TextoResultado;
+import SanjaValley.Persuance.Enums.ClasseGramatical;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +55,11 @@ public class PalavraController {
     public ResponseEntity<Palavra> adicionaPalavra(@RequestBody Palavra palavra) {
             Palavra _palavra = palavraService.novaPalavra(palavra);
             return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/classes")
+    public ClasseGramatical[] buscarClassesGramaticais(){
+        return ClasseGramatical.values();
     }
 
     @GetMapping(value = "/texto/{texto}")

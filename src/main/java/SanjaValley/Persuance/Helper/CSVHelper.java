@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import SanjaValley.Persuance.Enums.ClasseGramatical;
 import SanjaValley.Persuance.Repository.PalavraRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -49,7 +51,7 @@ public class CSVHelper {
         palavraConstructor.setAprovada(bAprovada);
         palavraConstructor.setSignificado(csvRecord.get(5));
         palavraConstructor.setExemploAprovado(csvRecord.get(6));
-        palavraConstructor.setClasseGramatical(csvRecord.get(7));
+        palavraConstructor.setClasseGramatical(getStringClasseGramatical(csvRecord.get(7)));
         palavraConstructor.setCategoria(csvRecord.get(8));
         palavraConstructor.setRevisao(1);
 
@@ -61,6 +63,10 @@ public class CSVHelper {
     } catch (IOException e) {
       throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
     }
+  }
+
+  private static String getStringClasseGramatical(String classeCsv){
+    return Normalizer.normalize(classeCsv.toUpperCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
   }
 
   private static Date parseDateFromString(String stringDate) {

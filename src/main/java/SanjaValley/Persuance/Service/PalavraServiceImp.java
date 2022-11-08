@@ -36,26 +36,26 @@ public class PalavraServiceImp implements PalavraService{
 
     @Override
     public int deletaPalavra(String palavra) {
-
-
         return palavraRepository.deleteByPalavra(palavra);
     }
 
     @Override
     public Palavra novaPalavra(Palavra palavra) {
+
         if (!checkPreenchimentoPalavra(palavra.getPalavra())
-                || !checkPreenchimentoClasseGramatical(palavra.getClasseGramatical())){
-            throw new IllegalArgumentException(mensagem);
+                    || !checkPreenchimentoClasseGramatical(palavra.getClasseGramatical())) {
+                throw new IllegalArgumentException(mensagem);
+            }
+            List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
+                    , palavra.getClasseGramatical());
+            if (!palavraList.isEmpty()) {
+                palavra.setRevisao(palavraList.get(0).getRevisao() + 1);
+            } else {
+                palavra.setRevisao(1);
+            }
+            return palavraRepository.save(palavra);
         }
-      List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
-              ,palavra.getClasseGramatical());
-      if(!palavraList.isEmpty()){
-          palavra.setRevisao(palavraList.get(0).getRevisao() +1);
-      }else{
-          palavra.setRevisao(1);
-        }
-       return palavraRepository.save(palavra);
-    }
+
 
     @Override
     public List<Palavra> buscaPorPalavra(String palavra){
@@ -88,7 +88,7 @@ public class PalavraServiceImp implements PalavraService{
             throw new IllegalArgumentException(mensagem);
         }
         List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra
-                ,classeGramatical);
+                ,null);
         if(palavraList.isEmpty()){
             throw new IllegalStateException("Nenhuma Palavra Encontrada");
         }
