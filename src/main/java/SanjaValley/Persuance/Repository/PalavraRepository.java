@@ -2,10 +2,14 @@ package SanjaValley.Persuance.Repository;
 
 import java.util.List;
 
+import SanjaValley.Persuance.Enums.ClasseGramatical;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import SanjaValley.Persuance.Entity.Palavra;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface PalavraRepository extends JpaRepository<Palavra, Long> {
 
@@ -13,7 +17,7 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long> {
     public List<Palavra> findByPalavra(String palavra);
 
     //Usado no caso de user, retorna a palavra que está na ULTIMA revisao
-    @Query(nativeQuery = true, value = "WITH pa_palavra AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY pa_classe_gramatical ORDER BY pa_revisao DESC) row_num FROM pa_palavra) SELECT * FROM pa_palavra  WHERE pa_palavra = ?1 AND row_num = 1")
+    @Query(nativeQuery = true, value = "WITH pa_palavra AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY pa_classe_gramatical ORDER BY pa_revisao DESC) row_num FROM pa_palavra) SELECT * FROM pa_palavra  WHERE pa_palavra = ?1 AND row_num = 1;")
     public List<Palavra> findUltimaRevisaoPalavra(String palavra);
 
 
@@ -22,4 +26,8 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long> {
     //Usado no caso do adm adicionar nova palavra, retorna a ultima revisao da palavra a ser inserida e a classe gramatical que ela pertence
     public List<Palavra> findByPalavraAndClasseGramaticalOrderByRevisaoDesc(String palavra, String classeGramatical);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "DELETE FROM pa_palavra a where a.pa_palavra = :palavra")
+    public int deleteByPalavra(@Param("palavra")String palavra);
 }

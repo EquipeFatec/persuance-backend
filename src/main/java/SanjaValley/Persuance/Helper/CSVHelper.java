@@ -5,21 +5,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import SanjaValley.Persuance.Enums.ClasseGramatical;
+import SanjaValley.Persuance.Repository.PalavraRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import SanjaValley.Persuance.Entity.Palavra;
 
 
 public class CSVHelper {
+
+  @Autowired
+  private static PalavraRepository palavraRepository;
   public static String TYPE = "text/csv";
   public static boolean hasCSVFormat(MultipartFile file) {
       return TYPE.equals(file.getContentType());
@@ -39,22 +46,27 @@ public class CSVHelper {
         palavraConstructor.setPalavra(csvRecord.get(1));
         palavraConstructor.setConjucacao(csvRecord.get(2));
         palavraConstructor.setTraducao(csvRecord.get(3));
-
         String aprovada = csvRecord.get(4);
         boolean bAprovada = aprovada.equalsIgnoreCase("SIM");
         palavraConstructor.setAprovada(bAprovada);
-
         palavraConstructor.setSignificado(csvRecord.get(5));
         palavraConstructor.setExemploAprovado(csvRecord.get(6));
-        palavraConstructor.setClasseGramatical(csvRecord.get(7));
+        palavraConstructor.setClasseGramatical(getStringClasseGramatical(csvRecord.get(7)));
         palavraConstructor.setCategoria(csvRecord.get(8));
+        palavraConstructor.setRevisao(1);
+
 
         uploadedData.add(palavraConstructor);
+
       }
       return uploadedData;
     } catch (IOException e) {
       throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
     }
+  }
+
+  private static String getStringClasseGramatical(String classeCsv){
+    return Normalizer.normalize(classeCsv.toUpperCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
   }
 
   private static Date parseDateFromString(String stringDate) {
