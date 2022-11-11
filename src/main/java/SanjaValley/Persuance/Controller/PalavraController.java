@@ -24,8 +24,8 @@ public class PalavraController {
     @Autowired
     private PalavraServiceImp palavraService;
 
-    @DeleteMapping(value = "deleta")
-    public ResponseEntity<String> deletaPalavra(@RequestParam(value = "palavra") String palavra){
+    @DeleteMapping(value = "/deleta/{palavra}")
+    public ResponseEntity<String> deletaPalavra(@PathVariable String palavra){
         var isRemoved = palavraService.deletaPalavra(palavra);
         if (isRemoved == 0){
             return new ResponseEntity<>("Não foi possivel deletar a palavra: ",HttpStatus.OK);
