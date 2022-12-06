@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PalavraService {
 
-    int deletaPalavra(String palavra);
+    int deletaPalavra(Long palavraId);
 
     public Palavra novaPalavra(Palavra palavra);
 

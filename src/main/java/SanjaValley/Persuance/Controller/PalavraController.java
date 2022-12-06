@@ -24,9 +24,9 @@ public class PalavraController {
     @Autowired
     private PalavraServiceImp palavraService;
 
-    @DeleteMapping(value = "/deleta/{palavra}")
-    public ResponseEntity<String> deletaPalavra(@PathVariable String palavra){
-        var isRemoved = palavraService.deletaPalavra(palavra);
+    @DeleteMapping(value = "/deleta/{id}")
+    public ResponseEntity<String> deletaPalavra(@PathVariable("id") Long palavraId){
+        int isRemoved = palavraService.deletaPalavra(palavraId);
         if (isRemoved == 0){
             return new ResponseEntity<>("Não foi possivel deletar a palavra: ",HttpStatus.OK);
         }
@@ -56,8 +56,6 @@ public class PalavraController {
         Palavra _palavra = palavraService.novaPalavra(palavra);
         return new ResponseEntity<>(_palavra, HttpStatus.CREATED);
     }
-
-    
 
     @GetMapping("/classes")
     public ClasseGramatical[] buscarClassesGramaticais(){

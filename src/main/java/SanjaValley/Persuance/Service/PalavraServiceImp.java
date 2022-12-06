@@ -34,9 +34,8 @@ public class PalavraServiceImp implements PalavraService{
         return true;
     }
 
-    @Override
-    public int deletaPalavra(String palavra) {
-        return palavraRepository.deleteByPalavra(palavra);
+    public int deletaPalavra(Long palavraId) {
+        return palavraRepository.deleteByPalavra(palavraId);
     }
 
     @Override
