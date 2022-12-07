@@ -51,6 +51,7 @@ public class PalavraServiceImp implements PalavraService{
                 palavra.setRevisao(palavraList.get(0).getRevisao() + 1);
             } else {
                 palavra.setRevisao(1);
+                palavra.setId(palavraRepository.findLastPalavraId() + 1);
             }
             return palavraRepository.save(palavra);
         }
