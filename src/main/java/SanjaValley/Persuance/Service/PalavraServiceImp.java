@@ -48,6 +48,8 @@ public class PalavraServiceImp implements PalavraService{
             List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
                     , palavra.getClasseGramatical());
             if (!palavraList.isEmpty()) {
+                Palavra palavraEncontrada = palavraList.get(0);
+                palavra.setId(palavraEncontrada.getId());
                 palavra.setRevisao(palavraList.get(0).getRevisao() + 1);
             } else {
                 palavra.setRevisao(1);
