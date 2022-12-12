@@ -45,15 +45,8 @@ public class PalavraServiceImp implements PalavraService{
                     || !checkPreenchimentoClasseGramatical(palavra.getClasseGramatical())) {
                 throw new IllegalArgumentException(mensagem);
             }
-            List<Palavra> palavraList = palavraRepository.findByPalavraAndClasseGramaticalOrderByRevisaoDesc(palavra.getPalavra()
-                    , palavra.getClasseGramatical());
-            if (!palavraList.isEmpty()) {
-                Palavra palavraEncontrada = palavraList.get(0);
-                palavra.setId(palavraEncontrada.getId());
-                palavra.setRevisao(palavraList.get(0).getRevisao() + 1);
-            } else {
+            if (palavra.getId() == 0){
                 palavra.setRevisao(1);
-                palavra.setId(palavraRepository.findLastPalavraId() + 1);
             }
             return palavraRepository.save(palavra);
         }
